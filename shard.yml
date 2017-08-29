@@ -1,0 +1,13 @@
+name: deeplcr
+version: 0.1.0
+
+authors:
+  - Arthur Poulet <arthur.poulet@mailoo.org>
+
+targets:
+  deeplcr:
+    main: src/deeplcr.cr
+
+crystal: 0.23.0+25
+
+license: MIT
