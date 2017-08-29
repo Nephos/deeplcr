@@ -52,7 +52,8 @@ require "option_parser"
 lang_from = "FR"
 lang_to = "EN"
 text = ""
-mode = :stdin
+mode = :args
+verbose = 1
 
 OptionParser.parse! do |parser|
   parser.banner = "Usage: deeplcr [arguments]"
@@ -68,8 +69,16 @@ OptionParser.parse! do |parser|
   parser.on("-a", "--arguments", "Use arguments as input text") do |v|
     mode = :args
   end
+  parser.on("-a", "--arguments", "Use arguments as input text") do |v|
+    mode = :args
+  end
+  parser.on("-o", "--only-translation", "Minimal output") do |v|
+    verbose = 0
+  end
   parser.on("-h", "--help", "Show this help") { puts parser; exit }
 end
+
+mode = :stdin if ARGV.empty?
 
 case mode
 when :stdin
@@ -80,8 +89,11 @@ else
   raise "Error: invalid mode"
 end
 
-puts "FROM: #{lang_from}"
-puts "TO  : #{lang_to}"
-puts "TEXT: #{text}"
-puts "------" + "-" * text.size
-puts Deeplcr.translate(text, lang_from, lang_to)
+if verbose > 0
+  puts "FROM: #{lang_from}"
+  puts "TO  : #{lang_to}"
+  puts "TEXT: #{text}"
+  puts "------" + "-" * text.size
+else
+  puts Deeplcr.translate(text, lang_from, lang_to)
+end
