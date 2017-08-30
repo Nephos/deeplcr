@@ -30,6 +30,7 @@ module Deeplcr
       },
       "id" => 42,
     }.to_json
+
     HTTP::Client.post(url: ENDPOINT, body: body) do |response|
       result = ""
       begin
@@ -49,7 +50,7 @@ end
 
 require "option_parser"
 
-lang_from = "FR"
+lang_from = "auto"
 lang_to = "EN"
 text = ""
 mode = :args
@@ -94,6 +95,5 @@ if verbose > 0
   puts "TO  : #{lang_to}"
   puts "TEXT: #{text}"
   puts "------" + "-" * text.size
-else
-  puts Deeplcr.translate(text, lang_from, lang_to)
 end
+puts Deeplcr.translate(text, lang_from, lang_to)
